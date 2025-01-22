@@ -15,7 +15,8 @@ namespace OrderApi.Aplication.Services
         {
             //Redirect this callto the API Gateway since product Api is not response to outsiders
             //Call Product Api using HttpClient
-            var getProduct = await httpClient.GetAsync($"/api/{productId}");
+            //var getProduct = await httpClient.GetAsync($"/api/{productId}");
+            var getProduct = await httpClient.GetAsync($"/api/products/{productId}");
             if (!getProduct.IsSuccessStatusCode) return null!;
 
             var product = await getProduct.Content.ReadFromJsonAsync<ProductDTO>();
@@ -54,18 +55,30 @@ namespace OrderApi.Aplication.Services
 
             //Populate Order Details
             return new OrderDetailsDTO(
-                order.Id,
-                productDTO.Id,
-                appUserDTO.Id, 
-                appUserDTO.Name,
-                appUserDTO.Email,
-                appUserDTO.Address,
-                appUserDTO.TelephoneNumber,
-                productDTO.Name,
-                order.PurchaseQuantity,
-                productDTO.Price,
-                productDTO.Quantity * order.PurchaseQuantity,
-                order.OrderDate
+                 //order.Id,
+                 //productDTO.Id,
+                 //appUserDTO.Id,
+                 //appUserDTO.Email,             
+                 //appUserDTO.Address,               
+                 //appUserDTO.TelephoneNumber,
+                 //appUserDTO.Name,
+                 //productDTO.Name,
+                 //order.PurchaseQuantity,
+                 //productDTO.Price,
+                 //productDTO.Quantity * order.PurchaseQuantity,
+                 //order.OrderDate
+                 order.Id,
+                 productDTO?.Id ?? 0,
+                 appUserDTO?.Id ?? 0,
+                 appUserDTO?.Email ?? "Unknown",
+                 appUserDTO?.Address ?? "Unknown",
+                 appUserDTO?.TelephoneNumber ?? "Unknown",
+                 appUserDTO?.Name ?? "Unknown",
+                 productDTO?.Name ?? "Unknown",
+                 order.PurchaseQuantity,
+                 productDTO?.Price ?? 0.0m,
+                 (productDTO?.Price ?? 0.0m) * order.PurchaseQuantity,
+                 order.OrderDate
             );
         }
 

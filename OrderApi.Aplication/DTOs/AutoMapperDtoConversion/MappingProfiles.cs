@@ -8,6 +8,7 @@ namespace OrderApi.Aplication.DTOs.AutoMapperDtoConversion
         public MappingProfiles() 
         {
             CreateMap<OrderDTO, OrderModel>();
+            CreateMap<OrderModel, OrderDTO>();
         }
     }
 }
